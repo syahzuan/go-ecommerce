@@ -29,9 +29,9 @@ func (s *APIServer) Run() error {
 	apiMux.HandleFunc("POST /login", userHandler.Login)
 	apiMux.HandleFunc("POST /register", userHandler.Register)
 
-	mux.Handle("/api/v1/", http.StripPrefix("/api/v1/", apiMux))
+	mux.Handle("/api/v1/", http.StripPrefix("/api/v1", apiMux))
 
 	log.Println("Listening on", s.addr)
 
-	return http.ListenAndServe(s.addr, nil)
+	return http.ListenAndServe(s.addr, mux)
 }
